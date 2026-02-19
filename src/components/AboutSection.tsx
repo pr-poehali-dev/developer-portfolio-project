@@ -9,27 +9,30 @@ const skills = [
   "Figma",
 ];
 
-const timeline = [
+const workSteps = [
   {
-    year: "2024 - н.в.",
-    role: "Senior Full-Stack Developer",
-    company: "Freelance / DevStudio",
-    description:
-      "Ведение собственных проектов и консалтинг для крупных компаний",
+    num: "01",
+    title: "Обсуждение",
+    description: "Выясняю задачи, цели и пожелания по проекту",
+    icon: "MessageSquare",
   },
   {
-    year: "2021 - 2024",
-    role: "Full-Stack Developer",
-    company: "Digital Agency Pro",
-    description:
-      "Разработка высоконагруженных веб-приложений и корпоративных систем",
+    num: "02",
+    title: "Проектирование",
+    description: "Создаю прототип и согласовываю дизайн",
+    icon: "PenTool",
   },
   {
-    year: "2019 - 2021",
-    role: "Frontend Developer",
-    company: "WebCraft Studio",
-    description:
-      "Создание SPA-приложений на React и верстка адаптивных интерфейсов",
+    num: "03",
+    title: "Разработка",
+    description: "Пишу чистый код и собираю проект",
+    icon: "Code2",
+  },
+  {
+    num: "04",
+    title: "Запуск",
+    description: "Тестирую, публикую и обеспечиваю поддержку",
+    icon: "Rocket",
   },
 ];
 
@@ -112,37 +115,27 @@ const AboutSection = () => {
               </div>
             </div>
 
-            {/* Timeline */}
             <div>
               <h3 className="font-heading font-semibold text-white text-sm mb-6 uppercase tracking-wider">
-                Опыт
+                Как я работаю
               </h3>
-              <div className="space-y-6">
-                {timeline.map((item, i) => (
-                  <div key={i} className="flex gap-4">
-                    {/* Timeline dot and line */}
-                    <div className="flex flex-col items-center">
-                      <div className="w-3 h-3 rounded-full bg-gradient-primary flex-shrink-0 mt-1.5" />
-                      {i < timeline.length - 1 && (
-                        <div className="w-px flex-1 bg-white/10 mt-2" />
-                      )}
-                    </div>
-
-                    {/* Content */}
-                    <div className="pb-6">
-                      <span className="font-body text-xs text-primary font-medium">
-                        {item.year}
+              <div className="grid grid-cols-2 gap-4">
+                {workSteps.map((step) => (
+                  <div key={step.num} className="glass rounded-xl p-4 hover-lift group">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-9 h-9 rounded-lg bg-gradient-primary flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                        <Icon name={step.icon} size={16} className="text-white" />
+                      </div>
+                      <span className="font-heading font-bold text-xs text-primary">
+                        {step.num}
                       </span>
-                      <h4 className="font-heading font-semibold text-white mt-1">
-                        {item.role}
-                      </h4>
-                      <p className="font-body text-sm text-accent mb-1">
-                        {item.company}
-                      </p>
-                      <p className="font-body text-sm text-muted-foreground">
-                        {item.description}
-                      </p>
                     </div>
+                    <h4 className="font-heading font-semibold text-white text-sm mb-1">
+                      {step.title}
+                    </h4>
+                    <p className="font-body text-xs text-muted-foreground leading-relaxed">
+                      {step.description}
+                    </p>
                   </div>
                 ))}
               </div>

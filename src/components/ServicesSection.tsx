@@ -6,42 +6,36 @@ const services = [
     title: "Разработка сайтов",
     description:
       "Создание современных и адаптивных веб-сайтов любой сложности с использованием передовых технологий",
-    price: "от 80 000 руб.",
   },
   {
     icon: "Smartphone",
     title: "Мобильные приложения",
     description:
       "Кроссплатформенные мобильные приложения для iOS и Android на React Native и Flutter",
-    price: "от 150 000 руб.",
   },
   {
     icon: "ShoppingCart",
     title: "Интернет-магазины",
     description:
       "Полнофункциональные онлайн-магазины с системой оплаты, складом и аналитикой продаж",
-    price: "от 120 000 руб.",
   },
   {
     icon: "Palette",
     title: "UI/UX Дизайн",
     description:
       "Проектирование пользовательских интерфейсов и прототипирование в Figma для веб и мобильных приложений",
-    price: "от 40 000 руб.",
   },
   {
     icon: "Search",
     title: "SEO Оптимизация",
     description:
       "Техническая и контентная оптимизация сайтов для поисковых систем и повышения видимости",
-    price: "от 25 000 руб.",
   },
   {
     icon: "Wrench",
     title: "Техническая поддержка",
     description:
       "Обслуживание, обновление и мониторинг работоспособности ваших веб-проектов 24/7",
-    price: "от 15 000 руб./мес.",
   },
 ];
 
@@ -83,24 +77,9 @@ const ServicesSection = () => {
                 {service.title}
               </h3>
 
-              {/* Description */}
-              <p className="font-body text-sm text-muted-foreground leading-relaxed mb-5">
+              <p className="font-body text-sm text-muted-foreground leading-relaxed">
                 {service.description}
               </p>
-
-              {/* Price */}
-              <div className="flex items-center justify-between pt-4 border-t border-white/5">
-                <span className="font-heading font-semibold text-sm text-gradient">
-                  {service.price}
-                </span>
-                <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <Icon
-                    name="ArrowRight"
-                    size={14}
-                    className="text-muted-foreground group-hover:text-primary transition-colors"
-                  />
-                </div>
-              </div>
             </div>
           ))}
         </div>
