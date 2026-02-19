@@ -11,13 +11,17 @@ import { Badge } from "@/components/ui/badge";
 /* ------------------------------------------------------------------ */
 
 interface SiteRequest {
+  id?: number;
   name: string;
   email: string;
   phone: string;
   message: string;
-  timestamp: string;
+  timestamp?: string;
+  created_at?: string;
   status?: "new" | "processed" | "rejected";
 }
+
+const API_REQUESTS = "https://functions.poehali.dev/a42a25de-7227-4042-904b-78f85f1073a6";
 
 interface SiteSettings {
   heroTitle: string;
@@ -145,26 +149,46 @@ function LoginGate({ onAuth }: { onAuth: () => void }) {
 function RequestsTab() {
   const [requests, setRequests] = useState<SiteRequest[]>([]);
   const [expanded, setExpanded] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setRequests(readLS<SiteRequest[]>("site_requests", []));
-  }, []);
+  const adminToken = localStorage.getItem("admin_password") || DEFAULT_PASSWORD;
 
-  const save = (next: SiteRequest[]) => {
-    setRequests(next);
-    writeLS("site_requests", next);
+  const fetchRequests = async () => {
+    try {
+      const res = await fetch(API_REQUESTS, {
+        headers: { "X-Admin-Token": adminToken }
+      });
+      const data = await res.json();
+      if (Array.isArray(data)) setRequests(data);
+    } catch { /* ignore */ }
+    setLoading(false);
   };
 
-  const setStatus = (idx: number, status: SiteRequest["status"]) => {
+  useEffect(() => { fetchRequests(); }, []);
+
+  const setStatus = async (idx: number, status: SiteRequest["status"]) => {
+    const req = requests[idx];
+    if (!req.id) return;
+    await fetch(API_REQUESTS, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", "X-Admin-Token": adminToken },
+      body: JSON.stringify({ id: req.id, status })
+    });
     const next = [...requests];
     next[idx] = { ...next[idx], status };
-    save(next);
+    setRequests(next);
     toast.success("Статус обновлен");
   };
 
-  const remove = (idx: number) => {
-    const next = requests.filter((_, i) => i !== idx);
-    save(next);
+  const remove = async (idx: number) => {
+    const req = requests[idx];
+    if (!req.id) return;
+    await fetch(API_REQUESTS, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json", "X-Admin-Token": adminToken },
+      body: JSON.stringify({ id: req.id })
+    });
+    setRequests(requests.filter((_, i) => i !== idx));
     setExpanded(null);
     toast.success("Заявка удалена");
   };
@@ -209,7 +233,12 @@ function RequestsTab() {
         </h2>
       </div>
 
-      {requests.length === 0 ? (
+      {loading ? (
+        <div className="glass rounded-2xl p-12 text-center">
+          <Icon name="Loader2" size={48} className="text-muted-foreground mx-auto mb-4 animate-spin" />
+          <p className="font-body text-muted-foreground">Загрузка заявок...</p>
+        </div>
+      ) : requests.length === 0 ? (
         <div className="glass rounded-2xl p-12 text-center">
           <Icon
             name="Inbox"
@@ -244,8 +273,8 @@ function RequestsTab() {
                 </div>
                 <div className="hidden lg:block min-w-[130px]">
                   <p className="font-body text-xs text-muted-foreground">
-                    {req.timestamp
-                      ? new Date(req.timestamp).toLocaleString("ru-RU", {
+                    {(req.created_at || req.timestamp)
+                      ? new Date(req.created_at || req.timestamp || "").toLocaleString("ru-RU", {
                           day: "2-digit",
                           month: "2-digit",
                           year: "numeric",

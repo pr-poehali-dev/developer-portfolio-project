@@ -1,0 +1,34 @@
+{
+  "tests": [
+    {
+      "name": "OPTIONS preflight",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "GET not allowed",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 405
+    },
+    {
+      "name": "POST missing fields",
+      "method": "POST",
+      "path": "/",
+      "body": {"name": "", "email": "", "message": ""},
+      "expectedStatus": 400,
+      "expectedBody": {"error": "string"},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "POST submit request",
+      "method": "POST",
+      "path": "/",
+      "body": {"name": "Тест", "email": "test@test.ru", "phone": "+79001234567", "message": "Тестовая заявка"},
+      "expectedStatus": 200,
+      "expectedBody": {"success": true, "id": "number"},
+      "bodyMatcher": "partial"
+    }
+  ]
+}

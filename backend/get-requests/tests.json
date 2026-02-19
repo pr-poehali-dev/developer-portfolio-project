@@ -1,0 +1,23 @@
+{
+  "tests": [
+    {
+      "name": "OPTIONS preflight",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "GET without auth",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 401
+    },
+    {
+      "name": "GET with auth",
+      "method": "GET",
+      "path": "/",
+      "headers": {"X-Admin-Token": "admin123"},
+      "expectedStatus": 200
+    }
+  ]
+}

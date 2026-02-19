@@ -38,7 +38,7 @@ const ContactSection = () => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
@@ -48,19 +48,24 @@ const ContactSection = () => {
 
     setSending(true);
 
-    // Store to localStorage
-    const existing = JSON.parse(localStorage.getItem("site_requests") || "[]");
-    existing.push({
-      ...form,
-      timestamp: new Date().toISOString(),
-    });
-    localStorage.setItem("site_requests", JSON.stringify(existing));
-
-    setTimeout(() => {
+    try {
+      const res = await fetch("https://functions.poehali.dev/c11343c8-6208-44a3-a28d-3a6b7d26f25e", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast.success("Заявка отправлена! Я свяжусь с вами в ближайшее время.");
+        setForm({ name: "", email: "", phone: "", message: "" });
+      } else {
+        toast.error(data.error || "Ошибка отправки");
+      }
+    } catch {
+      toast.error("Ошибка сети. Попробуйте позже.");
+    } finally {
       setSending(false);
-      toast.success("Заявка успешно отправлена! Я свяжусь с вами в ближайшее время.");
-      setForm({ name: "", email: "", phone: "", message: "" });
-    }, 600);
+    }
   };
 
   return (
