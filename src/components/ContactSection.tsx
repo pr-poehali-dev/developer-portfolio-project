@@ -6,26 +6,20 @@ const contactInfo = [
   {
     icon: "Mail",
     label: "Email",
-    value: "hello@devstudio.ru",
-    href: "mailto:hello@devstudio.ru",
+    value: "asmgmd@mail.ru",
+    href: "mailto:asmgmd@mail.ru",
   },
   {
     icon: "Phone",
     label: "Телефон",
-    value: "+7 (999) 123-45-67",
-    href: "tel:+79991234567",
+    value: "+7 (928) 538-90-50",
+    href: "tel:+79285389050",
   },
   {
     icon: "Send",
     label: "Telegram",
-    value: "@devstudio",
-    href: "https://t.me/devstudio",
-  },
-  {
-    icon: "MapPin",
-    label: "Локация",
-    value: "Москва, Россия",
-    href: "#",
+    value: "@devstudio05",
+    href: "https://t.me/devstudio05",
   },
 ];
 

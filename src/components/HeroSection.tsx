@@ -2,7 +2,7 @@ import Icon from "@/components/ui/icon";
 
 const stats = [
   { value: "50+", label: "проектов" },
-  { value: "5", label: "лет опыта" },
+  { value: "3", label: "года опыта" },
   { value: "100%", label: "гарантия" },
 ];
 

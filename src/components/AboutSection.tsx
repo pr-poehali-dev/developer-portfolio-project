@@ -65,10 +65,10 @@ const AboutSection = () => {
                 </div>
                 <div>
                   <div className="font-heading font-bold text-xl text-white">
-                    5+
+                    3+
                   </div>
                   <div className="font-body text-xs text-muted-foreground">
-                    лет опыта
+                    года опыта
                   </div>
                 </div>
               </div>
@@ -86,9 +86,10 @@ const AboutSection = () => {
 
             <div className="space-y-4 mb-8">
               <p className="font-body text-muted-foreground leading-relaxed">
-                Привет! Я full-stack разработчик с более чем 5-летним опытом
-                создания современных веб-приложений и цифровых продуктов.
-                Специализируюсь на React, TypeScript и Node.js.
+                Я full-stack разработчик с 3-летним опытом создания
+                современных веб-приложений и цифровых продуктов.
+                Специализируюсь на разработке сайтов, мобильных приложений,
+                интернет-магазинов и UI/UX дизайне.
               </p>
               <p className="font-body text-muted-foreground leading-relaxed">
                 Моя цель -- создавать не просто красивые интерфейсы, а
